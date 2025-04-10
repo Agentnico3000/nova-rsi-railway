@@ -17,7 +17,7 @@ def get_rsi(symbol, period=14):
     rs = avg_gain / avg_loss
     rsi = 100 - (100 / (1 + rs))
 
-    return rsi.iloc[-1]  # ✅ THIS IS THE CRITICAL FIX
+    return rsi.iloc[-1]  
 
 @app.route('/run', methods=['POST'])
 def run_bot():
