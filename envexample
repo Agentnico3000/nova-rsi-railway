@@ -1,0 +1,14 @@
+# ----------------------------
+# NOVA RSI BOT ENV TEMPLATE
+# ----------------------------
+
+# Use 'paper' or 'live' to control mode
+MODE=paper
+
+# Alpaca mock keys
+ALPACA_KEY=your_alpaca_api_key
+ALPACA_SECRET=your_alpaca_secret_key
+
+# Telegram integration (optional)
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token
+TELEGRAM_CHAT_ID=your_telegram_chat_id
