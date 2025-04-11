@@ -1,4 +1,3 @@
-# main.py - Autonomous Trading Bot (Zapier + Dashboard Ready)
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import yfinance as yf
@@ -6,9 +5,9 @@ import pandas as pd
 from datetime import datetime, timedelta
 import pytz
 import os
-from concurrent.futures import ThreadPoolExecutor
 import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///trades.db')
@@ -33,20 +32,12 @@ def get_signal(symbol):
     current_rsi = round(rsi.iloc[-1], 2)
     current_price = round(data['Close'].iloc[-1], 2)
     signal = 'HOLD'
-
     if current_rsi < 32 and current_price > data['Close'].rolling(20).mean().iloc[-1]:
         signal = 'BUY'
     elif current_rsi > 70:
         signal = 'SELL'
-
-    db.session.add(TradeSignal(
-        symbol=symbol,
-        signal=signal,
-        price=current_price,
-        rsi=current_rsi
-    ))
+    db.session.add(TradeSignal(symbol=symbol, signal=signal, price=current_price, rsi=current_rsi))
     db.session.commit()
-
     return {
         'symbol': symbol,
         'signal': signal,
@@ -90,7 +81,6 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     if os.getenv('AUTO_SCAN', 'true').lower() == 'true':
-        scanner_thread = threading.Thread(target=auto_scanner, daemon=True)
-        scanner_thread.start()
+        threading.Thread(target=auto_scanner, daemon=True).start()
     port = int(os.getenv('PORT', 5000))
     app.run(host='0.0.0.0', port=port)

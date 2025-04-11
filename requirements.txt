@@ -1,5 +1,5 @@
 flask
 yfinance
-flask_sqlalchemy
 pandas
 pytz
+flask_sqlalchemy
