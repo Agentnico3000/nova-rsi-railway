@@ -1,5 +1,0 @@
-flask
-yfinance
-pandas
-pytz
-flask_sqlalchemy
